@@ -1,7 +1,7 @@
 import os
 from PyQt6.QtCore import pyqtSlot, QObject
 
-class ApplicationBinding(QObject):
+class OccasumBinding(QObject):
   def __init__(self, window):
     super().__init__()
     self.window = window

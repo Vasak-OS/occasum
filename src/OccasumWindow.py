@@ -1,9 +1,9 @@
 from Vasak.VSKWindow import VSKWindow
-from src.AplicationBinding import AplicationBinding
+from src.OccasumBinding import OccasumBinding
 
-class AplicationWindow(VSKWindow):
+class OccasumWindow(VSKWindow):
     def __init__(self):
         super().__init__()
-        self.shareObject = AplicationBinding(self)
+        self.shareObject = OccasumBinding(self)
         self.channel.registerObject("vsk", self.shareObject)
         self.load_html("ui/dist/index.html") # Cargar un HTML en el WebView

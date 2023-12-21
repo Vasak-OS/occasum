@@ -1,13 +1,11 @@
 <script setup lang="ts">
+import { WindowFrame } from "@vasakgroup/vue-libvasak";
 </script>
 
 <template>
-  <header>
-   
-  </header>
-
-  <main>
-  </main>
+  <WindowFrame title="Vasak">
+    Test
+  </WindowFrame>
 </template>
 
 <style scoped>

@@ -15,3 +15,4 @@ class OccasumWindow(VSKWindow):
         self.setWindowFlags(
             self.windowFlags() | Qt.WindowType.FramelessWindowHint 
         )
+        self.resize(800, 600)

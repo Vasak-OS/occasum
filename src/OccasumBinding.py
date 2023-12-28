@@ -1,4 +1,6 @@
 import os
+import platform
+import json
 from PyQt6.QtCore import pyqtSlot, QObject, Qt
 
 class OccasumBinding(QObject):
@@ -58,3 +60,21 @@ class OccasumBinding(QObject):
       self.window.showNormal()
     else:
       self.window.showMaximized()
+
+  @pyqtSlot(result=str)
+  def getOSInfo(self):
+    data = {
+      "os": platform.system(),
+      "release": platform.release(),
+      "version": platform.version(),
+      "machine": platform.machine(),
+      "processor": platform.processor(),
+      "architecture": platform.architecture(),
+      "system": platform.system(),
+      "uname": platform.uname(),
+      "ram": (os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")) / (1024.**3),
+      "cpu_count": os.cpu_count(),
+      "hostname": platform.node(),
+      "username": os.getlogin(),
+    }
+    return json.dumps(data)

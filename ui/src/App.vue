@@ -64,10 +64,3 @@ export default defineComponent({
     </div>
   </WindowFrame>
 </template>
-
-<style>
-.side-content-area{
-  height: calc(100vh - 30px);
-  overflow: auto;
-}
-</style>

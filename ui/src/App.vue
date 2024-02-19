@@ -1,37 +1,32 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import { SideBar, SideButton, SideSection, WindowFrame } from '@vasakgroup/vue-libvasak';
 import routers from '@/routers/index';
+import { computed, inject, ref } from 'vue';
 
+var section = 'INFO';
+const $vsk: any = inject('vsk');
 
+const changeSection = (newSection: string) => {
+  console.log('changeSection', newSection);
+  section = newSection;
+};
 
-export default defineComponent({
-  name: 'App',
-  data() {
-    return {
-      routers,
-      section: 'INFO'
-    };
-  },
-  methods: {
-    changeSection(section: string) {
-      console.log('changeSection', section);
-      return this.section = section;
-    }
-  },
-  computed: {
-    routerComponent() {
-      return this.routers.find((r:any) => r.tag === this.section)?.component;
-    }
-
-  },
-  components: {
-    SideBar,
-    SideButton,
-    SideSection,
-    WindowFrame
-  }
+const routerComponent = computed(() => {
+  return routers.find((r: any) => r.tag === section)?.component;
 });
+
+const getImage = (image: string): Promise<string> => {
+  return $vsk.getIcon(image);
+};
+
+const routersData = ref(routers);
+
+routersData.value.forEach((router: any) => {
+  getImage(router.image).then((img: string) => {
+    router.image = img;
+  });
+})
+
 </script>
 
 <template>
@@ -40,7 +35,7 @@ export default defineComponent({
       <div class="row flex-nowarp">
         <SideBar>
           <SideSection>
-            <template v-for="router in routers" :key="router.tag">
+            <template v-for="router in routersData" :key="router.tag">
               <SideButton
                 :title="router.title"
                 :image="router.image"

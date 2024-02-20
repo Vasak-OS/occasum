@@ -30,7 +30,7 @@ routersData.value.forEach((router: any) => {
 </script>
 
 <template>
-  <WindowFrame title="Vasak">
+  <WindowFrame title="Occasum">
     <div class="container-fluid">
       <div class="row flex-nowarp">
         <SideBar>

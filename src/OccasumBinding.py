@@ -3,6 +3,7 @@ import json
 from PyQt6.QtCore import pyqtSlot, QObject, Qt
 from Vasak.hardware.VSKInfoHard import VSKInfoHard
 from Vasak.system.VSKIconManager import VSKIconManager
+from Vasak.system.VSKNetworkManager import VSKNetworkManager
 
 class OccasumBinding(QObject):
   def __init__(self, window, app):
@@ -11,6 +12,7 @@ class OccasumBinding(QObject):
     self.app = app
     self.info = VSKInfoHard()
     self.iconManager = VSKIconManager()
+    self.networkManager = VSKNetworkManager()
 
   @pyqtSlot(result=str)
   def getHome(self):
@@ -64,6 +66,10 @@ class OccasumBinding(QObject):
     else:
       self.window.showMaximized()
 
+  ###################
+  # Occasum Binding #
+  ###################
+
   @pyqtSlot(result=str)
   def getOSInfo(self):
     return json.dumps(self.info.getInfo())
@@ -71,3 +77,8 @@ class OccasumBinding(QObject):
   @pyqtSlot(str, result=str)
   def getIcon(self, name):
     return self.iconManager.get_icon(name)
+  
+  @pyqtSlot(result=str)
+  def getNetworkInfo(self):
+    self.networkManager.updateStatus()
+    return json.dumps(self.networkManager.getDefaultConnectionData())

@@ -1,7 +1,7 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { onMounted, ref, inject } from 'vue';
 
-const sysInfo = {
+const sysInfo = ref({
   os: 'platform.system()',
   release: 'platform.release()',
   version: 'platform.version()',
@@ -14,26 +14,19 @@ const sysInfo = {
   cpu_count: 'os.cpu_count()',
   hostname: 'platform.node()',
   username: 'os.getlogin()'
-};
+});
 
-export default defineComponent({
-  name: 'InfoView',
-  data() {
-    return {
-      sysInfo
-    };
-  },
-  methods: {
-    async setInfo() {
-      const newInfo = await (this as any).$vsk.getOSInfo();
-      console.log('newInfo', newInfo);
+const $vsk: any = inject('vsk');
 
-      this.sysInfo = JSON.parse(newInfo);
-    }
-  },
-  created() {
-    this.setInfo();
-  }
+async function setInfo() {
+  const newInfo = await $vsk.getOSInfo();
+  console.log('newInfo', newInfo);
+
+  sysInfo.value = JSON.parse(newInfo);
+}
+
+onMounted(() => {
+  setInfo();
 });
 </script>
 

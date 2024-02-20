@@ -3,16 +3,16 @@ import { SideBar, SideButton, SideSection, WindowFrame } from '@vasakgroup/vue-l
 import routers from '@/routers/index';
 import { computed, inject, ref } from 'vue';
 
-var section = 'INFO';
+var section = ref('INFO');
 const $vsk: any = inject('vsk');
 
 const changeSection = (newSection: string) => {
   console.log('changeSection', newSection);
-  section = newSection;
+  section.value = newSection;
 };
 
 const routerComponent = computed(() => {
-  return routers.find((r: any) => r.tag === section)?.component;
+  return routers.find((r: any) => r.tag === section.value)?.component;
 });
 
 const getImage = (image: string): Promise<string> => {

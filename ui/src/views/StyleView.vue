@@ -1,9 +1,4 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'StyleView'
-});
+<script lang="ts" setup>
 </script>
 
 <template>

@@ -5,6 +5,8 @@ import { computed, inject, ref } from 'vue';
 
 var section = ref('INFO');
 const $vsk: any = inject('vsk');
+const routersData = ref(routers);
+const image = ref('');
 
 const changeSection = (newSection: string) => {
   console.log('changeSection', newSection);
@@ -19,7 +21,9 @@ const getImage = (image: string): Promise<string> => {
   return $vsk.getIcon(image);
 };
 
-const routersData = ref(routers);
+const appImage = computed(() => {
+  return image.value;
+});
 
 routersData.value.forEach((router: any) => {
   getImage(router.image).then((img: string) => {
@@ -27,10 +31,14 @@ routersData.value.forEach((router: any) => {
   });
 })
 
+getImage('configurator').then((img: string) => {
+  image.value = img;
+});
+
 </script>
 
 <template>
-  <WindowFrame title="Occasum">
+  <WindowFrame title="Occasum" :image="appImage">
     <div class="container-fluid">
       <div class="row flex-nowarp">
         <SideBar>

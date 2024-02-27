@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { SideBar, SideButton, SideSection, WindowFrame } from '@vasakgroup/vue-libvasak';
+import { SideBar, SideButton, WindowFrame } from '@vasakgroup/vue-libvasak';
 import routers from '@/routers/index';
 import { computed, inject, ref } from 'vue';
 
@@ -29,40 +29,28 @@ routersData.value.forEach((router: any) => {
   getImage(router.image).then((img: string) => {
     router.image = img;
   });
-})
+});
 
 getImage('configurator').then((img: string) => {
   image.value = img;
 });
-
 </script>
 
 <template>
   <WindowFrame title="Occasum" :image="appImage">
-    <div class="container-fluid">
-      <div class="row flex-nowarp">
-        <SideBar>
-          <SideSection>
-            <template v-for="router in routersData" :key="router.tag">
-              <SideButton
-                :title="router.title"
-                :image="router.image"
-                @click="changeSection(router.tag)"
-              />
-            </template>
-          </SideSection>
-          <SideSection>
-            <SideButton
-              title="Link"
-              image="https://via.placeholder.com/32"
-              exec="https://google.com"
-            />
-          </SideSection>
-        </SideBar>
+    <div class="flex">
+      <SideBar>
+        <SideButton
+          v-for="router in routersData"
+          :key="router.tag"
+          :title="router.title"
+          :image="router.image"
+          @click="changeSection(router.tag)"
+        />
+      </SideBar>
 
-        <div class="p-3 col side-content-area">
-          <component :is="routerComponent" />
-        </div>
+      <div class="p-3 col side-content-area">
+        <component :is="routerComponent" />
       </div>
     </div>
   </WindowFrame>

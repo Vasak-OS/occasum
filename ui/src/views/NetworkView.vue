@@ -17,7 +17,7 @@ async function setNetwork() {
 }
 
 const status = computed(() => {
-  return networkInfo.value.connected ? 'text-success' : 'text-danger';
+  return networkInfo.value.connected ? 'connected' : 'disconnected';
 });
 
 onMounted(() => {
@@ -26,30 +26,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <div class="card">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <img :src="networkInfo.icon" class="img-fluid w-100" alt="Network icon" />
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <h5 class="card-title">{{ networkInfo.interface }} <span class="network-status" :class="status">●</span></h5>
-              <p class="card-text">{{ networkInfo.name }} <br/> {{ networkInfo.ip }}</p>
-          </div>
-        </div>
+  <div class="ocassum-network">
+    <div class="ocassum-network-status-card">
+      <div class="ocassum-network-status-card-icon">
+        <img :src="networkInfo.icon" alt="Network icon" />
+      </div>
+
+      <h2>
+        {{ networkInfo.interface }}
+        <span class="network-status" :class="status">&nbsp;</span>
+      </h2>
+      <p>{{ networkInfo.name }}</p>
+      <div>
+        <p>{{ networkInfo.ip }}</p>
       </div>
     </div>
   </div>
 </template>
-
-
-<style>
-.card {
-  background-color: var(--system-background);
-  border-radius: var(--system-border);
-  color: var(--system-text);
-  margin: 10px;
-  padding: 10px;
-}
-</style>

@@ -50,7 +50,9 @@ getImage('configurator').then((img: string) => {
       </SideBar>
 
       <div class="p-3 col side-content-area">
-        <component :is="routerComponent" />
+        <transition name="slide-fade" mode="out-in" appear>
+          <component :is="routerComponent"></component>
+        </transition>
       </div>
     </div>
   </WindowFrame>

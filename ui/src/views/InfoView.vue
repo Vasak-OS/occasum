@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { onMounted, ref, inject } from 'vue';
 
+const $vsk: any = inject('vsk');
+const section = 'INFO';
+const logo = ref('');
+
 const sysInfo = ref({
   os: 'platform.system()',
   release: 'platform.release()',
@@ -16,51 +20,31 @@ const sysInfo = ref({
   username: 'os.getlogin()'
 });
 
-const $vsk: any = inject('vsk');
-
 async function setInfo() {
   const newInfo = await $vsk.getOSInfo();
-  console.log('newInfo', newInfo);
-
   sysInfo.value = JSON.parse(newInfo);
 }
 
-onMounted(() => {
+const getConfig = (configName: string) => {
+  return $vsk.getConfig(section, configName);
+};
+
+onMounted(async () => {
   setInfo();
+  logo.value = await getConfig('logo');
 });
 </script>
 
 <template>
   <div>
-    <h1>Info</h1>
-
-    <div class="info-table">
-      <table class="table">
-        <tbody>
-          <tr v-for="(value, key) in sysInfo" :key="key">
-            <th scope="row">{{ key }}</th>
-            <td>{{ value }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <img :src="logo" class="ocassum-info-logo" alt="Logo" />
+    <table>
+      <tbody>
+        <tr v-for="(value, key) in sysInfo" :key="key">
+          <th scope="row">{{ key }}</th>
+          <td>{{ value }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
-
-<style scoped>
-.info-table {
-  padding: 20px 50px;
-}
-
-.table {
-  background-color: var(--system-background);
-  border-radius: var(--system-border);
-}
-
-.table th,
-.table td {
-  background-color: transparent;
-  color: var(--system-text);
-  border-color: var(--system-background);
-}
-</style>

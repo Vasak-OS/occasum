@@ -4,6 +4,7 @@ from PyQt6.QtCore import pyqtSlot, QObject, Qt
 from Vasak.hardware.VSKInfoHard import VSKInfoHard
 from Vasak.system.VSKIconManager import VSKIconManager
 from Vasak.system.VSKNetworkManager import VSKNetworkManager
+from Vasak.system.VSKConfigManager import VSKConfigManager
 
 class OccasumBinding(QObject):
   def __init__(self, window, app):
@@ -13,6 +14,7 @@ class OccasumBinding(QObject):
     self.info = VSKInfoHard()
     self.iconManager = VSKIconManager()
     self.networkManager = VSKNetworkManager()
+    self.configManager = VSKConfigManager()
 
   @pyqtSlot(result=str)
   def getHome(self):
@@ -82,3 +84,12 @@ class OccasumBinding(QObject):
   def getNetworkInfo(self):
     self.networkManager.updateStatus()
     return json.dumps(self.networkManager.getDefaultConnectionData())
+
+  @pyqtSlot(str, str, result=str)
+  def getConfig(self,section, key):
+    return self.configManager.get(section, key)
+  
+  @pyqtSlot(str, str, str)
+  def setConfig(self, section, key, value):
+    self.configManager.set(section, key, value)
+    

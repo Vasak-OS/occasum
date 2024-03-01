@@ -68,6 +68,10 @@ class OccasumBinding(QObject):
     else:
       self.window.showMaximized()
 
+  @pyqtSlot()
+  def loadUIConfig(self):
+    self.window.load_ui_config()
+
   ###################
   # Occasum Binding #
   ###################

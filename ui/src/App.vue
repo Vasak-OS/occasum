@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { SideBar, SideButton, WindowFrame } from '@vasakgroup/vue-libvasak';
 import routers from '@/routers/index';
-import { computed, inject, ref } from 'vue';
+import { computed, inject, ref, onMounted } from 'vue';
 
 var section = ref('INFO');
 const $vsk: any = inject('vsk');
@@ -33,6 +33,10 @@ routersData.value.forEach((router: any) => {
 
 getImage('configurator').then((img: string) => {
   image.value = img;
+});
+
+onMounted(() => {
+  $vsk.loadUIConfig();
 });
 </script>
 

@@ -3,7 +3,7 @@ import { SideBar, SideButton, WindowFrame } from '@vasakgroup/vue-libvasak';
 import routers from '@/routers/index';
 import { computed, inject, ref, onMounted } from 'vue';
 
-var section = ref('INFO');
+const section = ref('INFO');
 const $vsk: any = inject('vsk');
 const routersData = ref(routers);
 const image = ref('');
